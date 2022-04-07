@@ -5,16 +5,16 @@ const Filter = ({ count, sort, sortProducts, size, filterProducts }) => {
     <div className="filter">
       <div className="filter-result">{count} Products</div>
       <div className="filter-sort">
-        Order{" "}
-        <select value={sort} onChange={sortProducts}>
+        Order
+        <select value={sort} onChange={filterProducts}>
           <option>Latest</option>
           <option value="lowest">Lowest</option>
           <option value="highest">Highest</option>
         </select>
       </div>
       <div className="filter-size">
-        Filter{" "}
-        <select value={size} onChange={filterProducts}>
+        Filter
+        <select value={size} onChange={sortProducts}>
           <option value="">ALL</option>
           <option value="XS">XS</option>
           <option value="S">S</option>
