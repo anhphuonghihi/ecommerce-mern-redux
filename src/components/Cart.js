@@ -1,5 +1,6 @@
 import { useState } from "react";
 import formatCurrency from "../formatCurrency";
+import Fade from "react-reveal/Fade";
 const Cart = ({ cartItems, removeFromCart, createOrder }) => {
   const initState = {
     name: "",
@@ -34,87 +35,91 @@ const Cart = ({ cartItems, removeFromCart, createOrder }) => {
       )}
       <div>
         <div className="cart">
-          <ul className="cart-items">
-            {cartItems.map((item) => (
-              <li key={item._id}>
-                <div>
-                  <img src={item.image} alt={item.title}></img>
-                </div>
-                <div>
-                  <div>{item.title}</div>
-                  <div className="right">
-                    {formatCurrency(item.price)} x {item.count}
-                    <button
-                      className="button"
-                      onClick={() => removeFromCart(item)}
-                    >
-                      Remove
-                    </button>
+          <Fade left cascade>
+            <ul className="cart-items">
+              {cartItems.map((item) => (
+                <li key={item._id}>
+                  <div>
+                    <img src={item.image} alt={item.title}></img>
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
+                  <div>
+                    <div>{item.title}</div>
+                    <div className="right">
+                      {formatCurrency(item.price)} x {item.count}
+                      <button
+                        className="button"
+                        onClick={() => removeFromCart(item)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </Fade>
         </div>
         {cartItems.length !== 0 && (
-          <div className="cart">
-            <div className="total">
-              <div>
-                Total:
-                {formatCurrency(
-                  cartItems.reduce((a, c) => a + c.price * c.count, 0)
-                )}
+          <Fade right cascade>
+            <div className="cart">
+              <div className="total">
+                <div>
+                  Total:
+                  {formatCurrency(
+                    cartItems.reduce((a, c) => a + c.price * c.count, 0)
+                  )}
+                </div>
+                <button
+                  onClick={() => {
+                    setUser({ ...user, showCheckout: true });
+                  }}
+                  className="button primary"
+                >
+                  Proceed
+                </button>
               </div>
-              <button
-                onClick={() => {
-                  setUser({ ...user, showCheckout: true });
-                }}
-                className="button primary"
-              >
-                Proceed
-              </button>
+              {user.showCheckout && (
+                <div className="cart">
+                  <form onSubmit={onSubmitOrder}>
+                    <ul className="form-container">
+                      <li>
+                        <label>Email</label>
+                        <input
+                          name="email"
+                          type="email"
+                          required
+                          onChange={handleInput}
+                        ></input>
+                      </li>
+                      <li>
+                        <label>Name</label>
+                        <input
+                          name="name"
+                          type="text"
+                          required
+                          onChange={handleInput}
+                        ></input>
+                      </li>
+                      <li>
+                        <label>Address</label>
+                        <input
+                          name="address"
+                          type="text"
+                          required
+                          onChange={handleInput}
+                        ></input>
+                      </li>
+                      <li>
+                        <button className="button primary" type="submit">
+                          Checkout
+                        </button>
+                      </li>
+                    </ul>
+                  </form>
+                </div>
+              )}
             </div>
-            {user.showCheckout && (
-              <div className="cart">
-                <form onSubmit={onSubmitOrder}>
-                  <ul className="form-container">
-                    <li>
-                      <label>Email</label>
-                      <input
-                        name="email"
-                        type="email"
-                        required
-                        onChange={handleInput}
-                      ></input>
-                    </li>
-                    <li>
-                      <label>Name</label>
-                      <input
-                        name="name"
-                        type="text"
-                        required
-                        onChange={handleInput}
-                      ></input>
-                    </li>
-                    <li>
-                      <label>Address</label>
-                      <input
-                        name="address"
-                        type="text"
-                        required
-                        onChange={handleInput}
-                      ></input>
-                    </li>
-                    <li>
-                      <button className="button primary" type="submit">
-                        Checkout
-                      </button>
-                    </li>
-                  </ul>
-                </form>
-              </div>
-            )}
-          </div>
+          </Fade>
         )}
       </div>
     </div>
