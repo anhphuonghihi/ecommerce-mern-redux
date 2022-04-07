@@ -8,7 +8,6 @@ const Cart = ({ cartItems, removeFromCart, createOrder }) => {
     showCheckout: false,
   };
   const [user, setUser] = useState(initState);
-  console.log("🚀 ~ file: Cart.js ~ line 11 ~ Cart ~ user", user);
   const handleInput = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
@@ -22,6 +21,7 @@ const Cart = ({ cartItems, removeFromCart, createOrder }) => {
       cartItems: user.cartItems,
     };
     createOrder(order);
+    setUser(initState);
   };
   return (
     <div>
