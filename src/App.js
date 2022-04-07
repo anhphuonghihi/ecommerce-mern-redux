@@ -76,6 +76,9 @@ const App = () => {
       );
     }
   };
+  const createOrder = (order) => {
+    alert("Need to save order for " + order.name);
+  };
   return (
     <div className="grid-container">
       <header>
@@ -94,7 +97,11 @@ const App = () => {
             <Products products={products} addToCart={addToCart}></Products>
           </div>
           <div className="sidebar">
-            <Cart cartItems={cartItems} removeFromCart={removeFromCart} />
+            <Cart
+              cartItems={cartItems}
+              removeFromCart={removeFromCart}
+              createOrder={createOrder}
+            />
           </div>
         </div>
       </main>
