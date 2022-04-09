@@ -238,3 +238,8 @@ input {
 .success-message {
   color: green;
 }
+
+header{
+  justify-content: space-between;
+  padding: 0 10px;
+}

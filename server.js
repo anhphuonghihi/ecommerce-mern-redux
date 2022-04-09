@@ -15,10 +15,13 @@ app.listen(port, () =>
 const colors = require("colors");
 const mongoose = require("mongoose");
 mongoose
-  .connect("mongodb://localhost:27017/redux", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    "mongodb+srv://phuong:phuong@note.stjg5.mongodb.net/redux?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then((res) => console.log("> Connected...".bgCyan))
   .catch((err) =>
     console.log(
@@ -96,6 +99,23 @@ app.post("/api/orders", async (req, res) => {
       return res.json({ message: "Data is required." });
     }
     const order = await Order(req.body).save();
+    res.json(order);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+app.get("/api/orders", async (req, res) => {
+  try {
+    const orders = await Order.find({});
+    res.json(orders);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+app.delete("/api/orders/:id", async (req, res) => {
+  try {
+    const order = await Order.findByIdAndDelete(req.params.id);
     res.json(order);
   } catch (error) {
     return res.status(500).json({ message: error.message });
