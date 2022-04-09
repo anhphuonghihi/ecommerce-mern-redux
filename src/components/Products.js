@@ -5,6 +5,7 @@ import Zoom from "react-reveal/Zoom";
 import { useState, useEffect } from "react";
 import { fetchProducts } from "../actions/productActions";
 import { connect } from "react-redux";
+import { addToCart } from "../actions/cartActions";
 const Products = ({ addToCart, fetchProducts, products }) => {
   const [product, setProduct] = useState(null);
   const openModal = (product) => {
@@ -96,5 +97,6 @@ export default connect(
   (state) => ({ products: state.products.filteredItems }),
   {
     fetchProducts,
+    addToCart
   }
 )(Products);
