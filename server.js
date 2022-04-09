@@ -11,6 +11,8 @@ app.get("/", (req, res) => {
 app.listen(port, () =>
   console.log("> Server is up and running on port : " + port)
 );
+app.use("/", express.static(__dirname + "/build"));
+app.get("/", (req, res) => res.sendFile(__dirname + "/build/index.html"));
 
 const colors = require("colors");
 const mongoose = require("mongoose");
@@ -106,18 +108,10 @@ app.post("/api/orders", async (req, res) => {
 });
 
 app.get("/api/orders", async (req, res) => {
-  try {
-    const orders = await Order.find({});
-    res.json(orders);
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
+  const orders = await Order.find({});
+  res.send(orders);
 });
 app.delete("/api/orders/:id", async (req, res) => {
-  try {
-    const order = await Order.findByIdAndDelete(req.params.id);
-    res.json(order);
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
+  const order = await Order.findByIdAndDelete(req.params.id);
+  res.send(order);
 });
